@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * A simple thread and sync example that generates two threads that run
- * independent Fibinacci sequences and terminate after fourty seconds.
+ * independent Fibinacci sequences and terminate after forty seconds.
  * 
  * 
  * Created by Nicholas Spurlock
