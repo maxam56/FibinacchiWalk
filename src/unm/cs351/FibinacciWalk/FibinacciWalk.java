@@ -1,8 +1,13 @@
 package unm.cs351.FibinacciWalk;
+
 import java.util.ArrayList;
 
 /**
- * Created by nspurlock on 10/27/16.
+ * A simple thread and sync example that generates two threads that run
+ * independent Fibinacci sequences and terminate after fourty seconds.
+ * 
+ * 
+ * Created by Nicholas Spurlock
  */
 public class FibinacciWalk
 {
@@ -50,31 +55,33 @@ public class FibinacciWalk
     {
       return NAME;
     }
-    
+
     public long getStep()
     {
       return step;
     }
+
     /**
      * Synchronized meathod used to update or return current fibinacci values
      * 
-     * @param getValues true if we just want to return current x,y,z values
+     * @param getValues
+     *          true if we just want to return current x,y,z values
      * @return current values if getValues is true otherwise null
      */
     public synchronized long[] modifyFib(boolean getValues)
     {
       if (getValues)
       {
-        long[] v = {values[0], values[1], values[2]};
-        return v;    
+        long[] v = { values[0], values[1], values[2] };
+        return v;
       }
       z = x + y;
-      
-      //Save values for when we ask for them
+
+      // Save values for when we ask for them
       values[0] = x;
       values[1] = y;
       values[2] = z;
-      
+
       x = y;
       y = z;
       return null;
@@ -104,34 +111,31 @@ public class FibinacciWalk
             System.out.println("Thread (x,y,z): (" + values[0] + ", " + values[1] + ", " + values[2] + ")");
           }
           System.out.println();
-        }
-        else
+        } else
         {
           System.err.println("One of the threads has stopped before its time!");
           break;
         }
-      }
-      catch (InterruptedException e)
+      } catch (InterruptedException e)
       {
         e.printStackTrace();
       }
     }
-    //Out of the loop, stop the threads
+    // Out of the loop, stop the threads
     fw.stop = true;
-    
-    //Wait for threads to finish and exit
+
+    // Wait for threads to finish and exit
     while (fw.threads.get(0).isAlive() || fw.threads.get(1).isAlive())
     {
       try
       {
         Thread.sleep(500);
-      }
-      catch (InterruptedException e)
+      } catch (InterruptedException e)
       {
-        //Don't really care if we get interrupted we're exiting anyway
+        // Don't really care if we get interrupted we're exiting anyway
       }
     }
-    //Both threads are dead, exit
+    // Both threads are dead, exit
     System.out.println("Main thread exiting, goodbye!");
     System.exit(0);
 
